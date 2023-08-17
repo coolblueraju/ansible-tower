@@ -1,0 +1,21 @@
+---
+- name: Ensure Apache is deployed
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: first tag task
+      copy:
+        content: "Hello"
+        dest: /var/www/html/index.html
+      ignore_errors: yes
+      tags:
+        - alpha
+        - never
+    - name: Second tag task
+      copy:
+        content: "Bye Bye"
+        dest: /var/www/html/index.html
+      ignore_errors: yes
+      tags:
+        - beta
+        - never
