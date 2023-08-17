@@ -1,0 +1,24 @@
+---
+- name: Create user for project
+  become: yes
+  hosts: all
+  tasks:
+    - name: create group
+      group:
+        name: developer
+      when: ansible_hostname == "node2"
+
+    - name: add user sally to developer group
+      user:
+        name: sally
+        group: developer
+        append: yes
+      when: ansible_hostname == "node2"
+    - name: add host group
+      add_host:
+        host: node2
+        groups: dev
+
+    - name: Display host groups for node3
+      debug:
+        var: hostvars[node2]['web']
